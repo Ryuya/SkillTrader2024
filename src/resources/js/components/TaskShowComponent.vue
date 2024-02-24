@@ -30,6 +30,8 @@
      </template>
      
      <script>
+     import axios from 'axios';
+    import { mapState,mapActions } from 'vuex';
          export default {
              props: {
                 taskId: String
@@ -39,14 +41,25 @@
                     task: {}
                 }
             },
+            computed: {
+                ...mapState(['token']),
+            },
             methods: {
                 getTask() {
-                    axios.get('/api/tasks/' + this.taskId)
-                        .then((res) => {
-                            this.task = res.data;
-                        });
+                    axios.get('sanctum/csrf-cookie', { withCredentials: true })
+                    .then((response) => {
+                            axios.get('/api/tasks/' + this.taskId,{
+                                headers: {
+                                    'Authorization': 'Bearer ' + this.token
+                                }
+                            })
+                            .then((res) => {
+                                this.task = res.data;
+                            });
+                        }
+                    );
                 }
-            },
+        },
             mounted() {
                 this.getTask();
             }

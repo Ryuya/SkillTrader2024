@@ -24,7 +24,6 @@
         axios.get('/api/users')
           .then(response => {
             this.users = response.data;
-            console.log(this.users);
           })
           .catch(error => {
             console.error('Error fetching users:', error);

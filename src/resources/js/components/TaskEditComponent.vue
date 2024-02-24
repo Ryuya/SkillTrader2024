@@ -27,27 +27,47 @@
      </template>
      
      <script>
+     import axios from 'axios';
+        import { mapState,mapActions } from 'vuex';
          export default {
              props: {
-                 taskId: String
+                taskId: {
+                    type: [String, Number],
+                    required: true
+                }
              },
                      data: function () {
             return {
                 task: {}
             }
         },
+        computed: {
+            ...mapState(['token', 'isLoggedIn']),
+        },
+
         methods: {
             getTask() {
-                axios.get('/api/tasks/' + this.taskId)
-                    .then((res) => {
+                axios.get('sanctum/csrf-cookie', { withCredentials: true })
+                .then((response) => {
+                axios.get('/api/tasks/' + this.taskId, {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.token
+                    }
+                }).then((res) => {
                         this.task = res.data;
                     });
+                });
             },
             submit() {
-                axios.put('/api/tasks/' + this.taskId, this.task)
-                    .then((res) => {
+                axios.get('sanctum/csrf-cookie', { withCredentials: true })
+                .then((response) => {
+                axios.put('/api/tasks/' + this.taskId, this.task, {
+                    headers: {
+                    'Authorization': 'Bearer ' + this.token
+                }}).then((res) => {
                         this.$router.push({name: 'task.list'})
                     });
+                });
             }
         },
         mounted() {
