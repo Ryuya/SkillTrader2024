@@ -69,12 +69,18 @@ export default {
             
         },
         deleteTask(id) {
-            axios.delete('/api/tasks/' + id)
-            .then((res) => {
-                this.getTasks();
-            })
-            .catch((error) => {
-                console.error('Error deleting task:', error);
+            axios.get('sanctum/csrf-cookie', { withCredentials: true })
+            .then((response) => {
+                axios.delete('/api/tasks/' + id, {
+                    headers: {
+                        Authorization: 'Bearer ' + this.token
+                    }
+                }).then((res) => {
+                    this.getTasks();
+                })
+                .catch((error) => {
+                    console.error('Error deleting task:', error);
+                });
             });
         }
     },

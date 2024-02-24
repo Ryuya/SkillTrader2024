@@ -5446,10 +5446,18 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     },
     deleteTask: function deleteTask(id) {
       var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('/api/tasks/' + id).then(function (res) {
-        _this2.getTasks();
-      })["catch"](function (error) {
-        console.error('Error deleting task:', error);
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('sanctum/csrf-cookie', {
+        withCredentials: true
+      }).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]('/api/tasks/' + id, {
+          headers: {
+            Authorization: 'Bearer ' + _this2.token
+          }
+        }).then(function (res) {
+          _this2.getTasks();
+        })["catch"](function (error) {
+          console.error('Error deleting task:', error);
+        });
       });
     }
   }),
