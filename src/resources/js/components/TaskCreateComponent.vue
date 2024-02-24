@@ -23,20 +23,44 @@
      </template>
      
      <script>
+            import axios from 'axios';
+            import { mapState,mapActions } from 'vuex';
             export default {
                 data: function () {
                     return {
                         task: {}
                     }
                 },
+                computed: {
+                    ...mapState(['token', 'isLoggedIn']),
+                },
                 methods: {
+                    ...mapActions(['loginUser']),
                     submit() {
-                        axios.post('/api/tasks', this.task)
-                            .then((res) => {
-                                this.$router.push({name: 'task.list'});
-                            });
+                        axios.get('sanctum/csrf-cookie', { withCredentials: true })
+                        .then((response) => {
+                            axios.post('/api/tasks', this.task ,{
+                                headers: {
+                                    'Authorization': 'Bearer ' + this.token
+                                }
+                            })
+                                .then((res) => {
+                                    this.$router.push({name: 'task.list'});
+                                });
+                        }
+                        ).catch(error => {
+                            console.error('Error creating task:', error);
+                        });
                     }
-                }
+                },
+                mounted() {
+                    console.log(localStorage.getItem('auth_token'));
+                    const token = localStorage.getItem('auth_token');
+                    if (token) {
+                        // トークンがあれば自動的にログイン状態にする処理を実行
+                        this.loginUser(token);
+                    }
+                },
             }
      </script>
     

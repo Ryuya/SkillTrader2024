@@ -1,6 +1,7 @@
 volumes:
   db-store:
   psysh-store:
+  pma-session-store:
 
 configs:
   db-config:
@@ -75,3 +76,13 @@ services:
         published: ${MAILPIT_PUBLISHED_PORT:-8025}
         protocol: tcp
         mode: host
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=${DB_USER:-phper}
+      - PMA_PASSWORD=${DB_PASS:-secret}
+    ports:
+      - 8080:80
+    volumes:
+      - pma-session-store:/sessions

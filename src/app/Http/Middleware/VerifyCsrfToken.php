@@ -12,6 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        // ここに無効にするURIを追加する。
+        'api/register',
+        'api/login',
     ];
 }
