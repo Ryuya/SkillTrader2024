@@ -12,6 +12,8 @@ import TaskEditComponent from "./components/TaskEditComponent";
 import RegisterComponent from "./components/RegisterComponent";
 import UserListComponent from "./components/UserListComponent";
 import LoginComponent from "./components/LoginComponent";
+import ProfileComponent from "./components/ProfileComponent";
+import ProfileEditComponent from "./components/ProfileEditComponent";
 import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -55,6 +57,7 @@ const store = new Vuex.Store({
             }).then((res) => {
                 //userをセット
                 commit('setUser', res.data);
+                console.log('User!!!:', res.data);
             }).catch((error) => {
                 console.error('Error fetching user:', error);
             });
@@ -97,6 +100,23 @@ window.Vue = require('vue').default;
  const router = new VueRouter({
      mode: 'history',
      routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: LoginComponent,
+        },
+        {
+            path: '/users/:userId',
+            name: 'user.show',
+            component: ProfileComponent,
+            props: true,
+        },
+        {
+            path: '/users/:userId/edit',
+            name: 'user.edit',
+            component: ProfileEditComponent,
+            props: true,
+        },
          {
             path: '/tasks',
             name: 'task.list',

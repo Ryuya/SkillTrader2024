@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SkillController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +20,9 @@ use App\Http\Controllers\AuthController;
 
 
 Route::get('/users', [AuthController::class, 'index']);
-
+Route::put('/users/{id}', [UserController::class, 'edit']);
+Route ::get('/skills', [SkillController::class, 'index']);
+Route::get('/profile', [UserController::class, 'profile']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/tasks', [TaskController::class, 'index']);    
     Route::post('/tasks', [TaskController::class, 'store']);

@@ -2,16 +2,22 @@
     <div class="container-fluid bg-dark mb-3">
       <div class="container">
         <nav class="navbar navbar-dark">
-          <span class="navbar-brand mb-0 h1"> {{this.user != null ? 'Welcome! ' + this.user.name : 'Welcome'}}</span>
+          <span class="navbar-brand mb-0 h1"> {{this.user != null ? 'Skill Trader Welcome! ' + this.user.name : 'SkillTrader SPA'}}</span>
           <div>
+            
+            <template v-if="isLoggedIn && user">
+            <router-link v-bind:to="{name: 'users'}">
+                <button class="btn btn-success">HOME</button>
+            </router-link>
             <router-link v-bind:to="{name: 'task.list'}">
-              <button class="btn btn-success">List</button>
+                <button class="btn btn-success">List</button>
             </router-link>
             <router-link v-bind:to="{name: 'task.create'}">
-              <button class="btn btn-success">ADD</button>
+                <button class="btn btn-success">ADD</button>
             </router-link>
-            
-            <template v-if="isLoggedIn">
+            <router-link v-bind:to="{ name: 'user.show', params : { userId: this.user.id }}">
+                <button class="btn btn-primary">Profile</button>
+            </router-link>
               <!-- ログイン中の場合はログアウトボタンを表示 -->
               <button class="btn btn-danger" @click="logout">Logout</button>
             </template>
@@ -22,7 +28,6 @@
                 <button class="btn btn-light">Register</button>
                 </router-link>
             </template>
-            
           </div>
         </nav>
       </div>

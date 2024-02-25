@@ -66,7 +66,7 @@ export default {
                     console.log('Registration successful');
                     this.loginUser(response.data.api_token);
                     localStorage.setItem('auth_token', response.data.token);
-                    this.$router.push({ name: 'users' });
+                    this.$router.push({ name: 'user.edit' });
                 })
                 .catch(error => {
                     console.error('Error registering:', error);

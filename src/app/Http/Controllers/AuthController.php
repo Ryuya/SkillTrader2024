@@ -17,13 +17,19 @@ class AuthController extends Controller
 
     public function index()
     {
-        return User::all();
+
+        \Log::info(User::with(['learnableSkills', 'teachableSkills'])->get());
+        return User::with(['learnableSkills', 'teachableSkills'])->get();
     }
 
     public function getUser(Request $request){
 
         $token = $request->token;
         $user = User::where('api_token', $token)->first();
+        
+        $user->teachable_skills = $user->teachableSkills;
+        $user->learnable_skills = $user->learnableSkills;
+
         return response()->json($user, 200);
     }
     public function register(Request $request)
@@ -72,6 +78,5 @@ class AuthController extends Controller
         }
         
     }
-
 }
 

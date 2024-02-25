@@ -15,10 +15,11 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => bcrypt('1234'), // パスワードを1234に設定
+            'api_token' => Str::random(60), // APIトークンを生成
             'remember_token' => Str::random(10),
         ];
     }
@@ -34,6 +35,32 @@ class UserFactory extends Factory
             return [
                 'email_verified_at' => null,
             ];
+        });
+    }
+
+    /**
+     * ユーザーが学びたいスキルを関連付けます。
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function configureLearnableSkills()
+    {
+        return $this->afterCreating(function (User $user) {
+            $skills = Skill::inRandomOrder()->limit(3)->get(); // ランダムに3つのスキルを取得
+            $user->learnableSkills()->attach($skills); // ユーザーが学びたいスキルとして関連付ける
+        });
+    }
+
+    /**
+     * ユーザーが教えられるスキルを関連付けます。
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function configureTeachableSkills()
+    {
+        return $this->afterCreating(function (User $user) {
+            $skills = Skill::inRandomOrder()->limit(3)->get(); // ランダムに3つのスキルを取得
+            $user->teachableSkills()->attach($skills); // ユーザーが教えられるスキルとして関連付ける
         });
     }
 }

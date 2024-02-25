@@ -1,0 +1,147 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\Skill;
+use Database\Factories\SkillFactory;
+
+class SkillSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // 30個のスキルのリスト
+        $skills = [
+            'JavaScript',
+            'Python',
+            'Java',
+            'C#',
+            'PHP',
+            'Ruby',
+            'Swift',
+            'Kotlin',
+            'C++',
+            'TypeScript',
+            'Go',
+            'Rust',
+            'Scala',
+            'HTML',
+            'CSS',
+            'React',
+            'Angular',
+            'Vue.js',
+            'Node.js',
+            'Express.js',
+            'Laravel',
+            'Django',
+            'Spring',
+            'Ruby on Rails',
+            'ASP.NET',
+            'Flask',
+            'Symfony',
+            'Bootstrap',
+            'Tailwind CSS',
+            'jQuery',
+            // 既存リストの続き
+            'Sass',
+            'Webpack',
+            'Babel',
+            'GraphQL',
+            'Redux',
+            'Next.js',
+            'Nuxt.js',
+            'Vuetify',
+            'Material-UI',
+            'Ant Design',
+            'Electron',
+            'Ionic',
+            'React Native',
+            'Flutter',
+            'Cordova',
+            'Android Studio',
+            'Xcode',
+            'Unity',
+            'Unreal Engine',
+            'Docker',
+            'Kubernetes',
+            'AWS Lambda',
+            'Azure Functions',
+            'Google Cloud Functions',
+            'Firebase',
+            'MongoDB',
+            'Redis',
+            'PostgreSQL',
+            'MySQL',
+            'SQLite',
+            'MariaDB',
+            'Oracle',
+            'Microsoft SQL Server',
+            'Apache Kafka',
+            'RabbitMQ',
+            'Elasticsearch',
+            'Logstash',
+            'Kibana',
+            'Prometheus',
+            'Grafana',
+            'Git',
+            'SVN',
+            'Mercurial',
+            'Jenkins',
+            'Travis CI',
+            'CircleCI',
+            'GitLab CI',
+            'GitHub Actions',
+            'Ansible',
+            'Chef',
+            'Puppet',
+            'Terraform',
+            'Packer',
+            'Vagrant',
+            'Bash',
+            'PowerShell',
+            'Zsh',
+            'Fish',
+            'Perl',
+            'R',
+            'Matlab',
+            'Julia',
+            'Haskell',
+            'Erlang',
+            'Clojure',
+            'Elixir',
+            'F#',
+            'Dart',
+            'Objective-C',
+            'Groovy',
+            'Fortran',
+            'Lua',
+            'Crystal',
+            'Nim',
+            'ReasonML',
+            'OCaml',
+            'Solidity',
+            'WebAssembly',
+            'Apache Cordova',
+            'Sencha ExtJS',
+            'Backbone.js',
+            'Ember.js',
+            'Svelte',
+            'Quasar Framework',
+            'GreenSock Animation Platform (GSAP)',
+            'Three.js',
+            'A-Frame',
+            'Babylon.js',
+        ];
+
+        foreach ($skills as $skillName) {
+            Skill::create([
+                'name' => $skillName,
+            ]);
+        }
+    }
+}
